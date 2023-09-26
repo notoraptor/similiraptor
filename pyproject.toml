@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "similiraptor"
+version = "0.1.0"
+description = ""
+authors = ["notoraptor <notoraptor@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pillow = "^10.0.1"
+
+[tool.poetry.dev-dependencies]
+black = "^22.12.0"
+pytest = "^6.2.4"
+
+[tool.black]
+line-length = 88
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
