@@ -1,27 +1,9 @@
+from imgsimsearch.miniature import get_miniature, miniature_to_c_sequence
 from similiraptor.core import fn_compareSimilarSequences
 import sys
-from ctypes import pointer, c_int
+from ctypes import pointer
 from similiraptor.profiling import Profiler
-from similiraptor.clibrary import c_int_p
-from similiraptor.core import Sequence
 from PIL import Image
-from collections import namedtuple
-
-Miniature = namedtuple("Miniature", ("r", "g", "b"))
-
-
-def get_miniature(thumbnail):
-    r, g, b = thumbnail.split()
-    return Miniature(r.tobytes(), g.tobytes(), b.tobytes())
-
-
-def miniature_to_c_sequence(self):
-    array_type = c_int * len(self.r)
-    return Sequence(
-        c_int_p(array_type(*self.r)),
-        c_int_p(array_type(*self.g)),
-        c_int_p(array_type(*self.b)),
-    )
 
 
 def main():
@@ -47,5 +29,5 @@ def main():
     print(c, file=sys.stderr)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

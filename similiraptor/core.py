@@ -10,7 +10,11 @@ class Sequence(Structure):
 
 PtrSequence = POINTER(Sequence)
 
-_native_library = CLibrary(os.path.join(os.path.dirname(__file__), System.get_lib_basename("similiraptor", prefix="")))
+_native_library = CLibrary(
+    os.path.join(
+        os.path.dirname(__file__), System.get_lib_basename("similiraptor", prefix="")
+    )
+)
 
 fn_compareSimilarSequences = _native_library.prototype(
     "compareSimilarSequences", c_double, [PtrSequence, PtrSequence, c_int, c_int, c_int]
