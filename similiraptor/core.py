@@ -1,7 +1,8 @@
+import os
 from ctypes import POINTER, Structure, c_double, c_int
+
 from similiraptor.clibrary import CLibrary, c_int_p
 from similiraptor.system import System
-import os
 
 
 class Sequence(Structure):

@@ -1,8 +1,10 @@
-from similiraptor.core import fn_compareSimilarSequences, image_to_native
 import sys
 from ctypes import pointer
-from tests.profiling import Profiler
+
 from PIL import Image
+
+from similiraptor.core import fn_compareSimilarSequences, image_to_native
+from tests.profiling import Profiler
 
 
 def main():

@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 from imgsimsearch.abstract_image_provider import AbstractImageProvider
 from imgsimsearch.graph import Graph
-from similiraptor.core import fn_compareSimilarSequences, image_to_native
+from similiraptor.core import fn_compareSimilarSequences, image_to_native, PtrSequence
 
 SIM_LIMIT = 0.89
 SIMPLE_MAX_PIXEL_DISTANCE = 255 * 3
@@ -16,13 +16,13 @@ THUMBNAIL_SIZE = (THUMBNAIL_DIMENSION, THUMBNAIL_DIMENSION)
 class CppSimilarityComparator:
     __slots__ = ("max_dst_score", "limit", "width", "height")
 
-    def __init__(self, limit, width, height):
+    def __init__(self, limit: float, width: int, height: int):
         self.width = width
         self.height = height
         self.limit = limit
         self.max_dst_score = SIMPLE_MAX_PIXEL_DISTANCE * width * height
 
-    def are_similar(self, p1, p2) -> bool:
+    def are_similar(self, p1: PtrSequence, p2: PtrSequence) -> bool:
         return (
             fn_compareSimilarSequences(
                 p1, p2, self.width, self.height, self.max_dst_score
