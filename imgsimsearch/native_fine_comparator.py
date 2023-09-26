@@ -5,9 +5,7 @@ from tqdm import tqdm
 
 from imgsimsearch.abstract_image_provider import AbstractImageProvider
 from imgsimsearch.graph import Graph
-from similiraptor.profiling import InlineProfiler
-from imgsimsearch.miniature import miniature_to_c_sequence, get_miniature
-from similiraptor.core import fn_compareSimilarSequences
+from similiraptor.core import fn_compareSimilarSequences, image_to_native
 
 SIM_LIMIT = 0.89
 SIMPLE_MAX_PIXEL_DISTANCE = 255 * 3
@@ -37,22 +35,15 @@ def compare_images_native(
     imp: AbstractImageProvider, output: Dict[Any, Sequence[Any]]
 ) -> List[Set[Any]]:
     nb_images = imp.count()
-    miniatures = {}
+    native_sequences = {}
+    native_sequence_pointers = {}
     with tqdm(total=nb_images, desc="Generate numpy miniatures") as pbar:
         for identifier, image in imp.items():
-            miniatures[identifier] = get_miniature(image.resize(THUMBNAIL_SIZE))
+            sequence = image_to_native(image.resize(THUMBNAIL_SIZE))
+            native_sequences[identifier] = sequence
+            native_sequence_pointers[identifier] = pointer(sequence)
             pbar.update(1)
-    assert len(miniatures) == nb_images
-
-    with InlineProfiler("Generate native sequences"):
-        native_sequences = {
-            identifier: miniature_to_c_sequence(sequence)
-            for identifier, sequence in miniatures.items()
-        }
-        native_sequence_pointers = {
-            identifier: pointer(sequence)
-            for identifier, sequence in native_sequences.items()
-        }
+    assert len(native_sequences) == nb_images
 
     graph = Graph()
     nb_todo = sum(len(d) for d in output.values())

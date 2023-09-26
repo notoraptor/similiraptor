@@ -1,5 +1,4 @@
-from imgsimsearch.miniature import get_miniature, miniature_to_c_sequence
-from similiraptor.core import fn_compareSimilarSequences
+from similiraptor.core import fn_compareSimilarSequences, image_to_native
 import sys
 from ctypes import pointer
 from similiraptor.profiling import Profiler
@@ -12,12 +11,10 @@ def main():
     w = 32
     h = 32
     s = (w, h)
-    image = Image.new("RGB", s, color=(255, 255, 0))
+    image1 = Image.new("RGB", s, color=(255, 255, 0))
     image2 = Image.new("RGB", s, color=(255, 255, 255))
-    m1 = get_miniature(image)
-    m2 = get_miniature(image2)
-    s1 = miniature_to_c_sequence(m1)
-    s2 = miniature_to_c_sequence(m2)
+    s1 = image_to_native(image1)
+    s2 = image_to_native(image2)
     ss1 = pointer(s1)
     ss2 = pointer(s2)
 
