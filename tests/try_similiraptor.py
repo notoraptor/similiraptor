@@ -1,7 +1,7 @@
 from similiraptor.core import fn_compareSimilarSequences, image_to_native
 import sys
 from ctypes import pointer
-from similiraptor.profiling import Profiler
+from tests.profiling import Profiler
 from PIL import Image
 
 
