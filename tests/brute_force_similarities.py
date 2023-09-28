@@ -4,7 +4,6 @@ from ctypes import pointer
 
 from tqdm import tqdm
 
-from imgsimsearch.graph import Graph
 from imgsimsearch.native_fine_comparator import (
     CppSimilarityComparator,
     SIM_LIMIT,
@@ -32,17 +31,18 @@ def main():
     ]
     nb_images = len(image_paths)
     nb_computations = nb_images * (nb_images - 1) // 2
-    graph = Graph()
+    groups = []
 
     print("Brute force comparisons to do:", nb_computations, file=sys.stderr)
     with tqdm(total=nb_computations, desc="Brute force similarity search") as pbar:
         for i in range(nb_images):
+            nears = []
             for j in range(i + 1, nb_images):
                 if sim_cmp.are_similar(sequence_pointers[i], sequence_pointers[j]):
-                    graph.connect(image_paths[i], image_paths[j])
+                    nears.append(j)
                 pbar.update(1)
-
-    groups = [sorted(group) for group in graph.pop_groups() if len(group) > 1]
+            if nears:
+                groups.append([image_paths[i]] + sorted(image_paths[j] for j in nears))
 
     with open(OUTPUT_JSON_PATH, "w") as file:
         json.dump(groups, file, indent=1)

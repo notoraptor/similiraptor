@@ -7,7 +7,7 @@ from imgsimsearch.abstract_image_provider import AbstractImageProvider
 from imgsimsearch.graph import Graph
 from similiraptor.core import PtrSequence, fn_compareSimilarSequences, image_to_native
 
-SIM_LIMIT = 89 / 100
+SIM_LIMIT = 95 / 100
 SIMPLE_MAX_PIXEL_DISTANCE = 255 * 3
 THUMBNAIL_DIMENSION = 32
 THUMBNAIL_SIZE = (THUMBNAIL_DIMENSION, THUMBNAIL_DIMENSION)

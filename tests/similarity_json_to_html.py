@@ -3,11 +3,12 @@ import os
 import sys
 from typing import List
 
+OUTPUT_BASENAME = "brute_force_similarities_per_image_k0"
 OUTPUT_JSON_PATH = os.path.join(
-    os.path.dirname(__file__), "brute_force_similarities.json"
+    os.path.dirname(__file__), f"{OUTPUT_BASENAME}.json"
 )
 OUTPUT_HTML_PATH = os.path.join(
-    os.path.dirname(__file__), "brute_force_similarities.html"
+    os.path.dirname(__file__), f"{OUTPUT_BASENAME}.html"
 )
 
 

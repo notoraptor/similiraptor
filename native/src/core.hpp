@@ -15,11 +15,11 @@ struct Sequence {
 
 constexpr int SIMPLE_MAX_PIXEL_DISTANCE = 255 * 3;
 constexpr int V = SIMPLE_MAX_PIXEL_DISTANCE;
-constexpr double B = V / 2.0;
-constexpr double V_PLUS_B = V + B;
+constexpr int K = 0;
+constexpr int KV_PLUS_V = K * V + V;
 
 inline double exaggerate(double x) {
-	return V_PLUS_B * x / (x  + B);
+	return KV_PLUS_V * x / (K * x + V);
 }
 
 inline double pixelDistance(const Sequence* p1, int indexP1, const Sequence* p2, int indexP2) {
