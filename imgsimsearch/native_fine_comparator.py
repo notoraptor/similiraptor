@@ -1,11 +1,11 @@
 from ctypes import pointer
-from typing import Dict, Any, Sequence, List, Set
+from typing import Any, Dict, List, Sequence, Set
 
 from tqdm import tqdm
 
 from imgsimsearch.abstract_image_provider import AbstractImageProvider
 from imgsimsearch.graph import Graph
-from similiraptor.core import fn_compareSimilarSequences, image_to_native, PtrSequence
+from similiraptor.core import PtrSequence, fn_compareSimilarSequences, image_to_native
 
 SIM_LIMIT = 89 / 100
 SIMPLE_MAX_PIXEL_DISTANCE = 255 * 3
