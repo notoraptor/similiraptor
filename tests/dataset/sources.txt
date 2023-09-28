@@ -1,0 +1,27 @@
+Images are thumbnails taken from videos collected in following links:
+
+	https://commons.wikimedia.org/w/index.php?search=lion&title=Special:MediaSearch&go=Go&type=video
+	https://commons.wikimedia.org/w/index.php?search=tiger&title=Special:MediaSearch&go=Go&type=video
+	https://pixabay.com/videos/search/nature/
+	https://pixabay.com/videos/search/nature/?pagi=2
+	https://pixabay.com/videos/search/nature/?pagi=3
+	https://pixabay.com/videos/search/nature/?pagi=4
+	https://pixabay.com/videos/search/nature/?pagi=5
+	https://pixabay.com/videos/search/nature/?pagi=6
+	https://pixabay.com/videos/search/nature/?pagi=7
+	https://pixabay.com/videos/search/nature/?pagi=8
+	https://pixabay.com/videos/search/nature/?pagi=9
+	https://pixabay.com/videos/search/nature/?pagi=10
+	https://pixabay.com/videos/search/nature/?pagi=11
+	https://pixabay.com/videos/search/nature/?pagi=12
+	https://pixabay.com/videos/search/nature/?pagi=13
+	https://pixabay.com/videos/search/nature/?pagi=14
+	https://pixabay.com/videos/search/nature/?pagi=15
+	https://pixabay.com/videos/search/nature/?pagi=16
+	https://pixabay.com/videos/search/nature/?pagi=17
+	https://pixabay.com/videos/search/nature/?pagi=18
+	https://pixabay.com/videos/search/nature/?pagi=19
+	https://pixabay.com/videos/search/nature/?pagi=20
+	https://pixabay.com/videos/search/nature/?pagi=21
+
+Each thumbnail is taken at time t/2 of corresponding video.
