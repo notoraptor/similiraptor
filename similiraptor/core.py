@@ -21,6 +21,10 @@ fn_compareSimilarSequences = _native_library.prototype(
     "compareSimilarSequences", c_double, [PtrSequence, PtrSequence, c_int, c_int, c_int]
 )
 
+fn_countSimilarPixels = _native_library.prototype(
+    "countSimilarPixels", c_double, [PtrSequence, PtrSequence, c_int, c_int, c_int]
+)
+
 
 def image_to_native(image) -> Sequence:
     red, green, blue = image.split()
@@ -29,7 +33,5 @@ def image_to_native(image) -> Sequence:
     b = blue.tobytes()
     array_type = c_int * len(r)
     return Sequence(
-        c_int_p(array_type(*r)),
-        c_int_p(array_type(*g)),
-        c_int_p(array_type(*b)),
+        c_int_p(array_type(*r)), c_int_p(array_type(*g)), c_int_p(array_type(*b))
     )

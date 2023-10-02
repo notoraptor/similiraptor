@@ -6,6 +6,7 @@
 #define SIMILIRAPTOR_CORE_HPP
 
 #include <cstdlib>
+#include <algorithm>
 
 struct Sequence {
 	int* r; // red
@@ -15,7 +16,7 @@ struct Sequence {
 
 constexpr int SIMPLE_MAX_PIXEL_DISTANCE = 255 * 3;
 constexpr int V = SIMPLE_MAX_PIXEL_DISTANCE;
-constexpr int K = 0;
+constexpr int K = 2;
 constexpr int KV_PLUS_V = K * V + V;
 
 inline double exaggerate(double x) {
@@ -146,6 +147,23 @@ inline double inlineCompare(const Sequence* p1, const Sequence* p2, int width, i
 				PIXEL_DISTANCE(p1, x, y, p2, x + 1, y + 1, width));
 	}
 	return (maximumDistanceScore - totalDistance) / maximumDistanceScore;
+}
+
+inline double inlineCount(const Sequence* p1, const Sequence* p2, int width, int height, int maximumPixelDistance) {
+	int r = 2;
+	double total = 0;
+	for (int x = 0; x < width; ++x) {
+		for (int y = 0; y < height; ++y) {
+			double minDistance = SIMPLE_MAX_PIXEL_DISTANCE;
+			for (int i = std::max(0, x - r); i < std::min(x + r + 1, width); ++i) {
+				for (int j = std::max(0, y - r); j < std::min(y + r + 1, height); ++j) {
+					minDistance = std::min(minDistance, PIXEL_DISTANCE(p1, x, y, p2, i, j, width));
+				}
+			}
+			total += minDistance <= maximumPixelDistance;
+		}
+	}
+	return total;
 }
 
 #endif //SIMILIRAPTOR_CORE_HPP

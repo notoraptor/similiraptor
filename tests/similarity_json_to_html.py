@@ -3,13 +3,9 @@ import os
 import sys
 from typing import List
 
-OUTPUT_BASENAME = "brute_force_similarities_per_image_k0"
-OUTPUT_JSON_PATH = os.path.join(
-    os.path.dirname(__file__), f"{OUTPUT_BASENAME}.json"
-)
-OUTPUT_HTML_PATH = os.path.join(
-    os.path.dirname(__file__), f"{OUTPUT_BASENAME}.html"
-)
+OUTPUT_BASENAME = "brute_force_sim_per_img_k0_count_r2_l3x10_no_norm"
+OUTPUT_JSON_PATH = os.path.join(os.path.dirname(__file__), f"{OUTPUT_BASENAME}.json")
+OUTPUT_HTML_PATH = os.path.join(os.path.dirname(__file__), f"{OUTPUT_BASENAME}.html")
 
 
 def _path_to_uri(filename: str):
@@ -17,7 +13,7 @@ def _path_to_uri(filename: str):
     return f"file:///{filename}"
 
 
-def generate_similarity_html(groups: List[List[str]]):
+def generate_similarity_html(groups: List[List[str]], output_html_path: str):
     html = "<html><head>"
     html += """
     <style type="text/css">
@@ -56,14 +52,14 @@ def generate_similarity_html(groups: List[List[str]]):
     html += "<tbody></table></body>"
     html += "</html>"
 
-    with open(OUTPUT_HTML_PATH, "w") as file:
+    with open(output_html_path, "w") as file:
         file.write(html)
 
     print(
-        "Saved",
+        "HTML: Saved",
         len(groups),
-        f"similarity groups ({sum(len(group) for group in groups)} images) in HTML at",
-        OUTPUT_JSON_PATH,
+        f"similarity groups ({sum(len(group) for group in groups)} images) in",
+        output_html_path,
         file=sys.stderr,
     )
 
@@ -71,7 +67,7 @@ def generate_similarity_html(groups: List[List[str]]):
 def main():
     with open(OUTPUT_JSON_PATH) as file:
         groups = json.load(file)
-    generate_similarity_html(groups)
+    generate_similarity_html(groups, OUTPUT_HTML_PATH)
 
 
 if __name__ == "__main__":

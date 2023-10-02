@@ -10,6 +10,8 @@ python = "^3.8"
 pillow = "^10.0.1"
 nmslib = "^2.1.1"
 tqdm = "^4.66.1"
+opencv-python = "^4.8.1.78"
+matplotlib = "3.7.3"
 
 [tool.poetry.dev-dependencies]
 black = "^22.12.0"
