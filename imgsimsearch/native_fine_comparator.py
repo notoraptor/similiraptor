@@ -1,12 +1,17 @@
+import math
 from ctypes import pointer
 from typing import Any, Dict, List, Sequence, Set
 
 from tqdm import tqdm
-import math
 
 from imgsimsearch.abstract_image_provider import AbstractImageProvider
 from imgsimsearch.graph import Graph
-from similiraptor.core import PtrSequence, fn_compareSimilarSequences, fn_countSimilarPixels, image_to_native
+from similiraptor.core import (
+    PtrSequence,
+    fn_compareSimilarSequences,
+    fn_countSimilarPixels,
+    image_to_native,
+)
 
 SIM_LIMIT = 89 / 100
 SIMPLE_MAX_PIXEL_DISTANCE = 255 * 3
@@ -15,20 +20,35 @@ THUMBNAIL_SIZE = (THUMBNAIL_DIMENSION, THUMBNAIL_DIMENSION)
 
 
 class CppSimilarityComparator:
-    __slots__ = ("max_dst_score", "limit", "width", "height", "fn")
+    __slots__ = ("max_dst_score", "limit", "width", "height")
 
-    def __init__(self, limit: float, width: int, height: int, use_count=False):
+    def __init__(self, limit: float, width: int, height: int):
         self.width = width
         self.height = height
-        self.limit = math.ceil(width * height * limit) if use_count else limit
-        self.max_dst_score = int(3 * 10) if use_count else (SIMPLE_MAX_PIXEL_DISTANCE * width * height)
-        self.fn = fn_countSimilarPixels if use_count else fn_compareSimilarSequences
+        self.limit = limit
+        self.max_dst_score = SIMPLE_MAX_PIXEL_DISTANCE * width * height
 
     def are_similar(self, p1: PtrSequence, p2: PtrSequence) -> bool:
         return (
-            self.fn(
+            fn_compareSimilarSequences(
                 p1, p2, self.width, self.height, self.max_dst_score
             )
+            >= self.limit
+        )
+
+
+class CppSimilarityCounter:
+    __slots__ = ("max_pixel_dst", "limit", "width", "height")
+
+    def __init__(self, limit: float, width: int, height: int):
+        self.width = width
+        self.height = height
+        self.limit = math.ceil(width * height * limit)
+        self.max_pixel_dst = 3 * 10
+
+    def are_similar(self, p1: PtrSequence, p2: PtrSequence) -> bool:
+        return (
+            fn_countSimilarPixels(p1, p2, self.width, self.height, self.max_pixel_dst)
             >= self.limit
         )
 

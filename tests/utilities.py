@@ -1,18 +1,16 @@
+import json
 import os
+import sys
 from typing import List
 
 from PIL import Image
 
-import sys
-
-import json
 from tests.profiling import Profiler
-
 
 TEST_DIR = os.path.dirname(__file__)
 
 
-class Dataset:
+class ImageUtils:
     IMAGE_RGB_MODE = "RGB"
 
     @classmethod
@@ -28,17 +26,8 @@ class Dataset:
         image.putdata(data)
         return image
 
-    @classmethod
-    def get_image_paths(cls) -> List[str]:
-        dataset_folder = os.path.join(os.path.dirname(__file__), "dataset", "images")
-        paths = sorted(
-            os.path.join(dataset_folder, name) for name in os.listdir(dataset_folder)
-        )
-        assert len(paths) == 2105
-        return paths
 
-
-class Checker:
+class SimilarityChecker:
     __slots__ = ("video_to_sim", "sim_groups")
 
     def __init__(self):
@@ -99,3 +88,59 @@ class Checker:
                             print("\t*", filename, file=sys.stderr)
                             missing_is_printed = True
                         print("\t ", linked_filename, file=sys.stderr)
+
+
+def _path_to_uri(filename: str):
+    filename = filename.replace("\\", "/")
+    return f"file:///{filename}"
+
+
+def generate_similarity_html(groups: List[List[str]], output_html_path: str):
+    html = "<html><head>"
+    html += """
+    <style type="text/css">
+    td.title {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        text-align: center;
+        vertical-align: top;
+        white-space: nowrap;
+    }
+    div.image {
+        display: inline-block;
+        padding: 0.25rem;
+        text-align: center;
+    }
+    div.image div.img-title {
+        font-weight: bold;
+    }
+    </style>
+    """
+    html += "</head>"
+    html += "<body><table><tbody>"
+    for i, group in enumerate(groups):
+        html += "<tr>"
+        html += f'<td class="title"><h1>Group {i}</h1></td>'
+        html += "<td>"
+        html += "".join(
+            f'<div class="image">'
+            f'<div><img src="{_path_to_uri(filename)}"/></div>'
+            f'<div class="img-title">{os.path.basename(filename)[:-4]}</div>'
+            f"</div>"
+            for filename in group
+        )
+        html += "</td>"
+        html += "</tr>"
+    html += "<tbody></table></body>"
+    html += "</html>"
+
+    with open(output_html_path, "w") as file:
+        file.write(html)
+
+    print(
+        "HTML: Saved",
+        len(groups),
+        f"similarity groups ({sum(len(group) for group in groups)} images) in",
+        output_html_path,
+        file=sys.stderr,
+    )

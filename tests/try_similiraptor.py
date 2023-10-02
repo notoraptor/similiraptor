@@ -1,14 +1,12 @@
 import sys
+import tkinter as tk
 from ctypes import pointer
+
+from PIL import Image, ImageOps, ImageTk
 
 from similiraptor.core import fn_compareSimilarSequences, image_to_native
 from tests.profiling import Profiler
-from tests.dataset_provider import Dataset
-
-
-import tkinter as tk
-
-from PIL import Image, ImageTk, ImageOps
+from tests.utilities import ImageUtils
 
 
 class Display:
@@ -116,7 +114,7 @@ def equalize_image(image: Image.Image) -> Image.Image:
                 _clip_color(pixel[2] + distance),
             )
         )
-    return Dataset.new_rgb_image(output, *image.size)
+    return ImageUtils.new_rgb_image(output, *image.size)
 
 
 def near(v, l, s=0.3):
@@ -174,8 +172,8 @@ def main_specific():
     path22 = "C:/data/git/similiraptor/tests/dataset/images/1161808718.jpg"
     path31 = "C:/data/git/similiraptor/tests/dataset/images/1651265780.jpg"
     path32 = "C:/data/git/similiraptor/tests/dataset/images/771082710.jpg"
-    image1 = Dataset.open_rgb_image(path1)
-    image2 = Dataset.open_rgb_image(path2)
+    image1 = ImageUtils.open_rgb_image(path1)
+    image2 = ImageUtils.open_rgb_image(path2)
     dimg1 = ImageOps.equalize(image1)
     dimg2 = ImageOps.equalize(image2)
     Display.from_images(image1, dimg1, image2, dimg2)

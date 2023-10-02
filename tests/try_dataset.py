@@ -1,6 +1,6 @@
 import os
 
-from tests.dataset_provider import Dataset
+from tests.dataset import Dataset
 
 
 def main():

@@ -1,7 +1,9 @@
 import json
+import os
 import sys
 from ctypes import pointer
 
+from PIL import ImageOps
 from tqdm import tqdm
 
 from imgsimsearch.native_fine_comparator import (
@@ -11,15 +13,18 @@ from imgsimsearch.native_fine_comparator import (
     THUMBNAIL_SIZE,
     image_to_native,
 )
-from tests.dataset_provider import Dataset, Checker
+from tests.dataset import Dataset
 from tests.profiling import Profiler
-from tests.similarity_json_to_html import (
-    OUTPUT_JSON_PATH,
+from tests.utilities import (
+    ImageUtils,
+    SimilarityChecker,
+    TEST_DIR,
     generate_similarity_html,
-    OUTPUT_HTML_PATH,
 )
-from tests.try_similiraptor import image_h_dists, normalize_brightness, equalize_image
-from PIL import ImageOps
+
+OUTPUT_BASENAME = "brute_force_results"
+OUTPUT_JSON_PATH = os.path.join(TEST_DIR, "ignored", f"{OUTPUT_BASENAME}.json")
+OUTPUT_HTML_PATH = os.path.join(TEST_DIR, "ignored", f"{OUTPUT_BASENAME}.html")
 
 
 def main():
@@ -29,7 +34,7 @@ def main():
     image_paths = Dataset.get_image_paths()
     sequences = [
         image_to_native(
-            ImageOps.equalize(Dataset.open_rgb_image(path)).resize(THUMBNAIL_SIZE)
+            ImageOps.equalize(ImageUtils.open_rgb_image(path)).resize(THUMBNAIL_SIZE)
         )
         for path in tqdm(image_paths, desc="Generate native sequences")
     ]
@@ -62,7 +67,7 @@ def main():
         file=sys.stderr,
     )
     generate_similarity_html(groups, OUTPUT_HTML_PATH)
-    chk = Checker()
+    chk = SimilarityChecker()
     chk.check(groups)
 
 

@@ -1,8 +1,9 @@
-import os
-from tests.dataset_provider import TEST_DIR, Dataset
 import json
-from tests.similarity_json_to_html import generate_similarity_html
+import os
+
 from imgsimsearch.graph import Graph
+from tests.dataset import Dataset
+from tests.utilities import TEST_DIR, generate_similarity_html
 
 
 def main():
