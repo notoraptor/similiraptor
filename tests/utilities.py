@@ -20,12 +20,6 @@ class ImageUtils:
             image = image.convert(cls.IMAGE_RGB_MODE)
         return image
 
-    @staticmethod
-    def new_rgb_image(data, width, height):
-        image = Image.new("RGB", (width, height))
-        image.putdata(data)
-        return image
-
 
 class SimilarityChecker:
     __slots__ = ("video_to_sim", "sim_groups")

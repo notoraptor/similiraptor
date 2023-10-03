@@ -113,6 +113,12 @@ def norb2(image: Image.Image) -> Image.Image:
     return ImageEnhance.Brightness(image).enhance(EXPECTED / gray)
 
 
+def _new_rgb_image(data, width, height):
+    image = Image.new("RGB", (width, height))
+    image.putdata(data)
+    return image
+
+
 def equalize_image(image: Image.Image) -> Image.Image:
     grays = sorted({int(sum(p) / 3) for p in image.getdata()})
     if len(grays) < 2:
@@ -130,7 +136,7 @@ def equalize_image(image: Image.Image) -> Image.Image:
                 _clip_color(pixel[2] + distance),
             )
         )
-    return ImageUtils.new_rgb_image(output, *image.size)
+    return _new_rgb_image(output, *image.size)
 
 
 def main():
