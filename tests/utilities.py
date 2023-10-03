@@ -43,7 +43,7 @@ class SimilarityChecker:
         video_to_sim = self.video_to_sim
         sim_groups = self.sim_groups
 
-        video_to_group = {
+        new_video_to_group = {
             filename: group for group in new_sim_groups for filename in group
         }
 
@@ -76,18 +76,30 @@ class SimilarityChecker:
                             print("\t", filename, file=sys.stderr)
 
         with Profiler("Check expected similarities"):
+            total = sum(len(videos) - 1 for _, videos in sim_groups)
+            not_found = 0
             for sim_id, videos in sim_groups:
                 missing_is_printed = False
                 filename, *linked_filenames = videos
                 for linked_filename in linked_filenames:
-                    has_l = linked_filename in video_to_group.get(filename, ())
-                    has_r = filename in video_to_group.get(linked_filename, ())
+                    has_l = linked_filename in new_video_to_group.get(filename, ())
+                    has_r = filename in new_video_to_group.get(linked_filename, ())
                     if not has_l and not has_r:
                         if not missing_is_printed:
                             print("Missing", sim_id, file=sys.stderr)
                             print("\t*", filename, file=sys.stderr)
                             missing_is_printed = True
                         print("\t ", linked_filename, file=sys.stderr)
+                        not_found += 1
+            found = total - not_found
+            print(
+                "Found",
+                found,
+                "/",
+                total,
+                f"({found * 100 / total} %)",
+                file=sys.stderr,
+            )
 
 
 def _path_to_uri(filename: str):

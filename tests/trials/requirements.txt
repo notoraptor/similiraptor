@@ -1,0 +1,9 @@
+opencv-python=4.8.1.78
+matplotlib=3.7.3
+tensorflow=2.2
+tensorflow-hub=0.14.0
+protobuf=3.20
+numpy=1.23.5
+scikit-learn=1.2
+pandas=2
+keras=2.13.1

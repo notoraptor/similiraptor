@@ -1,4 +1,3 @@
-import math
 from ctypes import pointer
 from typing import Any, Dict, List, Sequence, Set
 
@@ -13,7 +12,7 @@ from similiraptor.core import (
     image_to_native,
 )
 
-SIM_LIMIT = 89 / 100
+SIM_LIMIT = 85 / 100
 SIMPLE_MAX_PIXEL_DISTANCE = 255 * 3
 THUMBNAIL_DIMENSION = 32
 THUMBNAIL_SIZE = (THUMBNAIL_DIMENSION, THUMBNAIL_DIMENSION)
@@ -43,7 +42,7 @@ class CppSimilarityCounter:
     def __init__(self, limit: float, width: int, height: int):
         self.width = width
         self.height = height
-        self.limit = math.ceil(width * height * limit)
+        self.limit = int(width * height * limit)
         self.max_pixel_dst = 3 * 10
 
     def are_similar(self, p1: PtrSequence, p2: PtrSequence) -> bool:

@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 def main():
     # read two input images as grayscale
-    img1 = cv2.imread("ignored/image1.jpg", 0)
-    img2 = cv2.imread("ignored/image2.jpg", 0)
+    img1 = cv2.imread("../ignored/image1.jpg", 0)
+    img2 = cv2.imread("../ignored/image2.jpg", 0)
 
     # Initiate SIFT detector
     sift = cv2.SIFT_create()

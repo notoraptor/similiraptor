@@ -8,6 +8,7 @@ from tqdm import tqdm
 
 from imgsimsearch.native_fine_comparator import (
     CppSimilarityComparator,
+    CppSimilarityCounter,
     SIM_LIMIT,
     THUMBNAIL_DIMENSION,
     THUMBNAIL_SIZE,
@@ -21,6 +22,7 @@ from tests.utilities import (
     TEST_DIR,
     generate_similarity_html,
 )
+from tests.try_similiraptor import norb2
 
 OUTPUT_BASENAME = "brute_force_results"
 OUTPUT_JSON_PATH = os.path.join(TEST_DIR, "ignored", f"{OUTPUT_BASENAME}.json")
@@ -33,9 +35,7 @@ def main():
     )
     image_paths = Dataset.get_image_paths()
     sequences = [
-        image_to_native(
-            ImageOps.equalize(ImageUtils.open_rgb_image(path)).resize(THUMBNAIL_SIZE)
-        )
+        image_to_native(norb2(ImageUtils.open_rgb_image(path)).resize(THUMBNAIL_SIZE))
         for path in tqdm(image_paths, desc="Generate native sequences")
     ]
     sequence_pointers = [
@@ -69,6 +69,7 @@ def main():
     generate_similarity_html(groups, OUTPUT_HTML_PATH)
     chk = SimilarityChecker()
     chk.check(groups)
+    print("END", len(groups), "groups", file=sys.stderr)
 
 
 if __name__ == "__main__":
