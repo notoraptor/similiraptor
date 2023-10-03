@@ -24,6 +24,7 @@ class DatasetImageProvider(AbstractImageProvider):
 def main():
     dip = DatasetImageProvider()
     groups = [sorted(values) for values in search_similar_images(dip)]
+    generate_similarity_html(groups, "ignored/similiraptor_results.html")
     chk = SimilarityChecker()
     chk.check(groups)
 
