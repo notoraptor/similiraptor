@@ -10,4 +10,4 @@ Attempt to write a script to detect similar images in arbitrary image dataset.
   - [As HTML page](tests/dataset_similarities.html)
 - Code:
   - [Brute force detection script](tests/brute_force_similarities.py)
-  - [Pre-selected detection function (not yet embedded in a script)](imgsimsearch/__init__.py)
+  - [Pre-selected detection script](tests/similiraptor_similarities.py)
