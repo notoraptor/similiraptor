@@ -71,7 +71,7 @@ def compare_images_native(
     sim_cmp = CppSimilarityComparator(
         SIM_LIMIT, THUMBNAIL_DIMENSION, THUMBNAIL_DIMENSION
     )
-    with tqdm(total=nb_todo, desc="Make real comparisons using Numpy") as bar:
+    with tqdm(total=nb_todo, desc="Make real comparisons") as bar:
         for filename, linked_filenames in output.items():
             p1 = native_sequence_pointers[filename]
             for linked_filename in linked_filenames:
