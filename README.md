@@ -1,8 +1,9 @@
-SimiliRaptor.
+# SimiliRaptor
 
 Attempt to write a script to detect similar images in arbitrary image dataset.
 
-Current state:
+## Current state
+
 - Dataset: [2105 images](tests/dataset/)
 - Manually detected similarities:
   - [JSON](tests/dataset_similarities.json)

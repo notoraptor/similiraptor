@@ -30,7 +30,7 @@ def main():
     dataset_sim_path = os.path.join(TEST_DIR, "dataset_similarities.json")
     dataset_sim_html = os.path.join(TEST_DIR, "dataset_similarities.html")
     with open(dataset_sim_path, "w") as file:
-        json.dump(dataset_sim, file)
+        json.dump(dataset_sim, file, indent=1)
     generate_similarity_html(dataset_sim, dataset_sim_html)
 
 
