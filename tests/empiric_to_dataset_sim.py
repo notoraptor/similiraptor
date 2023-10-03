@@ -11,7 +11,9 @@ def main():
     with open(empiric_path) as file:
         empiric_data = json.load(file)
     image_paths = Dataset.get_image_paths()
-    basename_to_path = {os.path.basename(path)[:-4]: path for path in image_paths}
+    basename_to_path = {
+        os.path.basename(path)[:-4]: os.path.basename(path) for path in image_paths
+    }
     assert len(basename_to_path) == len(image_paths)
     graph = Graph()
     for group in empiric_data:
@@ -31,7 +33,10 @@ def main():
     dataset_sim_html = os.path.join(TEST_DIR, "dataset_similarities.html")
     with open(dataset_sim_path, "w") as file:
         json.dump(dataset_sim, file, indent=1)
-    generate_similarity_html(dataset_sim, dataset_sim_html)
+    generate_similarity_html(
+        [[f"dataset/images/{basename}" for basename in group] for group in dataset_sim],
+        dataset_sim_html,
+    )
 
 
 if __name__ == "__main__":

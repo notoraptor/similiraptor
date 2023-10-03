@@ -32,7 +32,16 @@ class SimilarityChecker:
 
     def __init__(self):
         with open(os.path.join(TEST_DIR, "dataset_similarities.json")) as file:
-            self.sim_groups = list(enumerate(json.load(file)))
+            self.sim_groups = [
+                (
+                    i,
+                    [
+                        os.path.join(TEST_DIR, "dataset", "images", basename)
+                        for basename in group
+                    ],
+                )
+                for i, group in enumerate(json.load(file))
+            ]
         self.video_to_sim = {
             filename: value
             for value, filenames in self.sim_groups
@@ -103,6 +112,8 @@ class SimilarityChecker:
 
 
 def _path_to_uri(filename: str):
+    if filename.startswith("dataset/images/"):
+        return filename
     filename = filename.replace("\\", "/")
     return f"file:///{filename}"
 
