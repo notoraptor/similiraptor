@@ -22,7 +22,7 @@ from tests.utilities import (
     TEST_DIR,
     generate_similarity_html,
 )
-from tests.try_similiraptor import norb2
+from tests.experimental_utilities import norb2
 
 OUTPUT_BASENAME = "brute_force_results"
 OUTPUT_JSON_PATH = os.path.join(TEST_DIR, "ignored", f"{OUTPUT_BASENAME}.json")

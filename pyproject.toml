@@ -10,6 +10,8 @@ python = "^3.8"
 pillow = "^10.0.1"
 nmslib = "^2.1.1"
 tqdm = "^4.66.1"
+image-similarity-measures = "^0.3.6"
+pyfftw = "^0.13.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.12.0"
